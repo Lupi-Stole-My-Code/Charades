@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Charades", "Charades\Charad
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{0CF9C936-F449-4763-9676-04630CED7DFC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{EFA4D345-5C65-4B73-9680-555A95C54E0A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{0CF9C936-F449-4763-9676-04630CED7DFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0CF9C936-F449-4763-9676-04630CED7DFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0CF9C936-F449-4763-9676-04630CED7DFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFA4D345-5C65-4B73-9680-555A95C54E0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFA4D345-5C65-4B73-9680-555A95C54E0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFA4D345-5C65-4B73-9680-555A95C54E0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFA4D345-5C65-4B73-9680-555A95C54E0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

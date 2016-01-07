@@ -20,7 +20,7 @@ namespace Client.Forms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(chattext.Text.Length > 0)
+            if (chattext.Text.Length > 0)
             {
                 append(chattext.Text);
                 chattext.Text = String.Empty;
@@ -31,7 +31,7 @@ namespace Client.Forms
         {
             chatBox.AppendText("[" + DateTime.Now.ToLongTimeString() + "] ", Color.LightCoral);
             chatBox.AppendText("[" + Program.PlayerName + "]", Color.Green);
-            chatBox.AppendText( "  " + message + "\n", Color.Blue);
+            chatBox.AppendText("  " + message + "\n", Color.Blue);
         }
 
         private void SystemMessage(string text)
@@ -41,19 +41,25 @@ namespace Client.Forms
 
         private void SystemMessage(string text, Color color)
         {
-            chatBox.AppendText("[@]", Color.Red);
-            chatBox.AppendText(" " + text + Environment.NewLine, color);
+            Font font = new Font("Microsoft Sans Serif", 10);
+            chatBox.AppendText("[@]", Color.Red, font);
+            chatBox.AppendText(" " + text + Environment.NewLine, color, font);
         }
     }
 
     public static class RichTextBoxExtensions
     {
-        public static void AppendText(this RichTextBox box, string text, Color color)
+        public static void AppendText(this RichTextBox box, string text, Color color, Font font = null)
         {
+            if(font == null)
+            {
+                font = new Font("Microsoft Sans Serif", 8.25F);
+            }
             box.SelectionStart = box.TextLength;
             box.SelectionLength = 0;
 
             box.SelectionColor = color;
+            box.SelectionFont = font;
             box.AppendText(text);
             box.SelectionColor = box.ForeColor;
         }

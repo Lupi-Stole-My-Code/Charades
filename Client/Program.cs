@@ -22,6 +22,7 @@ namespace Client
 
         public static void Exit()
         {
+            Music.Stop();
             Application.Exit();
         }
     }

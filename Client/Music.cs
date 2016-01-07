@@ -1,33 +1,67 @@
 ﻿using System.Media;
+using NAudio;
+using NAudio.Wave;
+using NAudio.Vorbis;
 
 namespace Client
 {
     public sealed class Music
     {
-        private static SoundPlayer SP;
+        private static string song;
 
-        public static void WelcomeSound()
+        private static IWavePlayer waveOutDevice;
+        private static NAudio.Vorbis.VorbisWaveReader reader;
+
+        public static void init()
         {
             if (!Preferences.music)
             {
                 return;
             }
-            SP = new SoundPlayer(@"./sounds/tracks/Scott_Holmes_-_Cat_And_Mouse.wav");
-            SP.PlayLooping();
+            reader = new VorbisWaveReader(song);
+            waveOutDevice = new WaveOut();
+#pragma warning disable CS0618 // Type or member is obsolete
+            waveOutDevice.Volume = 0.5F;
+#pragma warning restore CS0618 // Type or member is obsolete
+            waveOutDevice.Init(reader);
+            waveOutDevice.Play();
+        }
+
+        public static void WelcomeSound()
+        {
+            song = @"./sounds/tracks/Scott_Holmes_-_Cat_And_Mouse.ogg";
+            init();
         }
         public static void Stop()
         {
-            if (SP != null)
-            {
-                SP.Stop();
-            }
+            CloseWaveOut();
+        }
+
+        public static void Pause()
+        {
+            waveOutDevice.Pause();
         }
 
         public static void Resume()
         {
-            if(SP != null)
+            waveOutDevice.Play();
+        }
+
+        private static void CloseWaveOut()
+        {
+            if (waveOutDevice != null)
             {
-                SP.PlayLooping();
+                waveOutDevice.Stop();
+            }
+            //if (mainOutputStream != null)
+            //{
+            //    audioFileReader.Dispose();
+            //    audioFileReader = null;
+            //}
+            if (waveOutDevice != null)
+            {
+                waveOutDevice.Dispose();
+                waveOutDevice = null;
             }
         }
     }

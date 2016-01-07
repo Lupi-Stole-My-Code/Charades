@@ -37,10 +37,10 @@
             // 
             // send
             // 
-            this.send.Dock = System.Windows.Forms.DockStyle.Right;
-            this.send.Location = new System.Drawing.Point(230, 0);
+            this.send.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.send.Location = new System.Drawing.Point(229, -1);
             this.send.Name = "send";
-            this.send.Size = new System.Drawing.Size(61, 43);
+            this.send.Size = new System.Drawing.Size(63, 45);
             this.send.TabIndex = 0;
             this.send.Text = "Send!";
             this.send.UseVisualStyleBackColor = true;
@@ -48,7 +48,7 @@
             // 
             // chattext
             // 
-            this.chattext.Dock = System.Windows.Forms.DockStyle.Left;
+            this.chattext.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.chattext.Location = new System.Drawing.Point(0, 0);
             this.chattext.Multiline = true;
             this.chattext.Name = "chattext";

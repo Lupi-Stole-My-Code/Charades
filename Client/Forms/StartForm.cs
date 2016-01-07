@@ -44,7 +44,6 @@ namespace Client
             this.Hide();
             a.ShowDialog();
             this.Show();
-            
         }
     }
 }

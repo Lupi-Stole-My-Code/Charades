@@ -88,6 +88,7 @@
             this.Controls.Add(this.chatBox);
             this.Name = "Chat";
             this.Text = "Charades | Chat";
+            this.Load += new System.EventHandler(this.Chat_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);

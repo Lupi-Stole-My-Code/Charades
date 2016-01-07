@@ -78,6 +78,12 @@
     <Compile Include="Forms\Chat.Designer.cs">
       <DependentUpon>Chat.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Logging.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Logging.Designer.cs">
+      <DependentUpon>Logging.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Playground.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -97,6 +103,9 @@
     <EmbeddedResource Include="Forms\Chat.resx">
       <DependentUpon>Chat.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Logging.resx">
+      <DependentUpon>Logging.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Playground.resx">
       <DependentUpon>Playground.cs</DependentUpon>
     </EmbeddedResource>
@@ -105,18 +114,19 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -130,6 +140,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="images\" />
     <Folder Include="sounds\effects\" />
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +153,24 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ajax-loader.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\loading.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\error.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ERROR4.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Error-64.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Error-128.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

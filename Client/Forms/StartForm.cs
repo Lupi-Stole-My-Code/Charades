@@ -40,7 +40,8 @@ namespace Client
 
         private void label2_Click(object sender, EventArgs e)
         {
-            Forms.Chat a = new Forms.Chat();
+            //Forms.Chat a = new Forms.Chat();
+            Forms.Logging a = new Forms.Logging();
             this.Hide();
             a.ShowDialog();
             this.Show();

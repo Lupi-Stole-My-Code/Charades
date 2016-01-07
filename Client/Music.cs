@@ -1,6 +1,4 @@
-﻿using System.Media;
-using NAudio;
-using NAudio.Wave;
+﻿using NAudio.Wave;
 using NAudio.Vorbis;
 
 namespace Client
@@ -10,7 +8,7 @@ namespace Client
         private static string song;
 
         private static IWavePlayer waveOutDevice;
-        private static NAudio.Vorbis.VorbisWaveReader reader;
+        private static VorbisWaveReader reader;
 
         public static void init()
         {

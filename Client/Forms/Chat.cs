@@ -45,6 +45,11 @@ namespace Client.Forms
             chatBox.AppendText("[@]", Color.Red, font);
             chatBox.AppendText(" " + text + Environment.NewLine, color, font);
         }
+
+        private void Chat_Load(object sender, EventArgs e)
+        {
+            this.ActiveControl = chattext;
+        }
     }
 
     public static class RichTextBoxExtensions

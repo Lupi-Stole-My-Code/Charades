@@ -8,7 +8,9 @@ namespace Client
 {
     static class Program
     {
-        public static string PlayerName = "Gość";
+        public static string PlayerName = "Gosc";
+        public static Forms.Chat chat_main;
+        public static Network network = new Network();
         /// <summary>
         /// The main entry point for the application.
         /// </summary>

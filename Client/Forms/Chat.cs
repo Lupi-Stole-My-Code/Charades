@@ -22,15 +22,33 @@ namespace Client.Forms
         {
             if (chattext.Text.Length > 0)
             {
-                append(chattext.Text);
-                chattext.Text = String.Empty;
+                //append(chattext.Text);
+                if (Preferences.Chat.connected)
+                {
+                    Program.network.send(chattext.Text);
+                    chattext.Text = String.Empty;
+                }
+                else
+                {
+                    MessageBox.Show("Disconnected from server");
+                    this.Close();
+                }
             }
         }
 
         private void append(string message)
         {
+            append(message, Program.PlayerName);
+        }
+
+        private void append(string message, string name)
+        {
+            if(this.InvokeRequired)
+            {
+                this.Invoke((MethodInvoker)delegate { append(message, name); });
+            }
             chatBox.AppendText("[" + DateTime.Now.ToLongTimeString() + "] ", Color.LightCoral);
-            chatBox.AppendText("[" + Program.PlayerName + "]", Color.Green);
+            chatBox.AppendText("[" + name + "]", Color.Green);
             chatBox.AppendText("  " + message + "\n", Color.Blue);
         }
 
@@ -50,23 +68,42 @@ namespace Client.Forms
         {
             this.ActiveControl = chattext;
         }
+
+        public void Msg(string text)
+        {
+            if (this.InvokeRequired)
+                this.Invoke((MethodInvoker)delegate { Msg(text); });
+            else
+            {
+                append(text, "Server");
+            }
+        }
     }
 
     public static class RichTextBoxExtensions
     {
         public static void AppendText(this RichTextBox box, string text, Color color, Font font = null)
         {
-            if(font == null)
+            if (font == null)
             {
                 font = new Font("Microsoft Sans Serif", 8.25F);
             }
-            box.SelectionStart = box.TextLength;
-            box.SelectionLength = 0;
 
-            box.SelectionColor = color;
-            box.SelectionFont = font;
-            box.AppendText(text);
-            box.SelectionColor = box.ForeColor;
+            if (box.InvokeRequired)
+            {
+                box.Invoke((MethodInvoker)delegate { box.AppendText(text, color, font); });
+            }
+            else
+            {
+                box.SelectionStart = box.TextLength;
+                box.SelectionLength = 0;
+
+                box.SelectionColor = color;
+                box.SelectionFont = font;
+                box.AppendText(text);
+                box.SelectionColor = box.ForeColor;
+            }
+  
         }
     }
 }

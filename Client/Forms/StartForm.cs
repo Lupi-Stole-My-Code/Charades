@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Media;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -40,10 +41,11 @@ namespace Client
 
         private void label2_Click(object sender, EventArgs e)
         {
-            //Forms.Chat a = new Forms.Chat();
-            Forms.Logging a = new Forms.Logging();
+            Program.chat_main = new Forms.Chat();
+            Program.network.connect(IPAddress.Loopback);
+           // Forms.Logging a = new Forms.Logging();
             this.Hide();
-            a.ShowDialog();
+            Program.chat_main.ShowDialog();
             this.Show();
         }
     }

@@ -68,7 +68,7 @@ namespace Charades
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Program.clientSocket.Connect("127.0.0.1", Program.port);
+           // Program.clientSocket.Connect("127.0.0.1", Program.port);
         }
     }     
 }

@@ -41,11 +41,14 @@ namespace Client
 
         private void label2_Click(object sender, EventArgs e)
         {
-            Program.chat_main = new Forms.Chat();
-            Program.network.connect(IPAddress.Loopback);
-           // Forms.Logging a = new Forms.Logging();
-            this.Hide();
-            Program.chat_main.ShowDialog();
+            //  Program.chat_main = new Forms.Chat();
+            //  Program.network.connect(IPAddress.Loopback);
+            // Forms.Logging a = new Forms.Logging();
+            // this.Hide();
+            //  Program.chat_main.ShowDialog();
+            Program.playground = new Forms.Playground();
+            Program.playground.ShowDialog();
+           
             this.Show();
         }
     }

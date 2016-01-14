@@ -11,6 +11,8 @@ namespace Client
         public static string PlayerName = "Gosc";
         public static Forms.Chat chat_main;
         public static Network network = new Network();
+        public static Forms.Playground playground;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>

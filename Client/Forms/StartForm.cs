@@ -21,6 +21,7 @@ namespace Client
 
         private void StartForm_Load(object sender, EventArgs e)
         {
+
             Music.WelcomeSound();
             showDefault();
             

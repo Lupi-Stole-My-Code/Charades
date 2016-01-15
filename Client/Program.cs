@@ -12,16 +12,21 @@ namespace Client
         public static Forms.Chat chat_main;
         public static Network network = new Network();
         public static Forms.Playground playground;
-
+        public static bool turn = false;//to check turn
+        public static StartForm startform;
+        
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
         {
+            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new StartForm());
+            startform = new StartForm();
+            Application.Run(startform);
+            
         }
 
         public static void Exit()

@@ -86,11 +86,23 @@ namespace Server
 
         public static void broadcast(string msg, string uName, bool flag)
         {
+            List<DictionaryEntry> toRemove = new List<DictionaryEntry>();
+
             foreach (DictionaryEntry Item in clientsList)
             {
                 TcpClient broadcastSocket;
+
                 broadcastSocket = (TcpClient)Item.Value;
+
+                if (!isConnected(broadcastSocket))
+                {
+                    Console.WriteLine("Cleaning Session : " + Item.Key.ToString());
+                    toRemove.Add(Item);
+                    continue;
+                }
+
                 NetworkStream broadcastStream = broadcastSocket.GetStream();
+
                 Byte[] broadcastBytes = null;
 
                 if (flag == true)
@@ -104,6 +116,16 @@ namespace Server
 
                 broadcastStream.Write(broadcastBytes, 0, broadcastBytes.Length);
                 broadcastStream.Flush();
+            }
+
+            if (toRemove.Count > 0)
+            {
+                foreach (DictionaryEntry var1 in toRemove)
+                {
+                    clientsList.Remove(var1.Key);
+                    clientsObjList.Remove(var1.Key);
+                }
+                toRemove = null;
             }
         }
 
@@ -150,7 +172,7 @@ namespace Server
                         Byte[] broadcastBytes = Encoding.ASCII.GetBytes("BYE");
                         broadcastStream.Write(broadcastBytes, 0, broadcastBytes.Length);
                         broadcastStream.Flush();
-                       // broadcastStream.Close();
+                        // broadcastStream.Close();
                     }
                     try
                     {

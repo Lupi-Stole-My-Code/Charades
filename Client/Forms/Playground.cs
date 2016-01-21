@@ -18,6 +18,7 @@ namespace Client.Forms
 
         private void Playground_Load(object sender, System.EventArgs e)
         {
+            this.TopMost = false;
             object form;
             if (Program.turn)
             {
@@ -33,7 +34,15 @@ namespace Client.Forms
 
         }
 
-
-    
+        private void Playground_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Program.playgroundRun = false;
+            if (Program.chatRun) Program.chat_main.Close();
+            if (!Program.mainRun)
+            {
+                Program.mainRun = true;
+                Program.startform.Show();
+            }
+        }
     }
 }

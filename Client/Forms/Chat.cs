@@ -16,6 +16,7 @@ namespace Client.Forms
         {
             InitializeComponent();
             SystemMessage("Welcome to chat!");
+            Program.chatRun = true;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -76,6 +77,17 @@ namespace Client.Forms
             else
             {
                 append(text, "Server");
+            }
+        }
+
+        private void Chat_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Program.chatRun = false;
+            if (Program.playgroundRun) Program.playground.Close();
+            if (!Program.mainRun)
+            {
+                Program.mainRun = true;
+                Program.startform.Show();
             }
         }
     }

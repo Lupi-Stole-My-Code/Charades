@@ -46,6 +46,7 @@
             this.Controls.Add(this.panel1);
             this.Name = "Playground";
             this.Text = "Charades | Playground";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Playground_FormClosing);
             this.Load += new System.EventHandler(this.Playground_Load);
             this.ResumeLayout(false);
 

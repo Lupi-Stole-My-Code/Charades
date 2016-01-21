@@ -13,10 +13,11 @@ namespace Client
 
         public void connect(IPAddress ip, int port = 5678)
         {
-            readData = "Conected to Server!";
-            msg();
             clientSocket.Connect(ip, port);
             serverStream = clientSocket.GetStream();
+
+            readData = "Connected to Server!";
+            msg();
 
             send(Program.PlayerName); // PlayerName
 
@@ -35,17 +36,23 @@ namespace Client
         {
             while (true)
             {
-                serverStream = clientSocket.GetStream();
-                int buffSize = 255;
-                byte[] inStream = new byte[10025];
-                buffSize = clientSocket.ReceiveBufferSize;
-                // serverStream.Read(inStream, 0, buffSize);
-                var count = serverStream.Read(inStream, 0, inStream.Length);
-                string returndata = Encoding.ASCII.GetString(inStream, 0, count);
-               // string returndata = System.Text.Encoding.ASCII.GetString(inStream);
-                readData = "" + returndata;
-                if (!checkIfCommand()) break;
-                msg();
+                try {
+                    serverStream = clientSocket.GetStream();
+                    int buffSize = 255;
+                    byte[] inStream = new byte[10025];
+                    buffSize = clientSocket.ReceiveBufferSize;
+                    // serverStream.Read(inStream, 0, buffSize);
+                    var count = serverStream.Read(inStream, 0, inStream.Length);
+                    string returndata = Encoding.ASCII.GetString(inStream, 0, count);
+                    // string returndata = System.Text.Encoding.ASCII.GetString(inStream);
+                    readData = "" + returndata;
+                    if (!checkIfCommand()) break;
+                    msg();
+                }
+                catch
+                {
+
+                }
             }
             serverStream.Close();
             clientSocket.Close();

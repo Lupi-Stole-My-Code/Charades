@@ -29,32 +29,25 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Logging));
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.Connect = new System.Windows.Forms.Button();
             this.Back = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.status = new System.Windows.Forms.ToolStripStatusLabel();
             this.label1 = new System.Windows.Forms.Label();
             this.loading = new System.Windows.Forms.PictureBox();
-            this.status = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.loading)).BeginInit();
             this.SuspendLayout();
             // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(52, 51);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(396, 21);
-            this.comboBox1.TabIndex = 0;
-            // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(52, 78);
+            this.textBox1.Location = new System.Drawing.Point(52, 48);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(396, 20);
             this.textBox1.TabIndex = 1;
+            this.textBox1.Text = "127.0.0.1";
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // Connect
             // 
@@ -85,14 +78,21 @@
             this.statusStrip1.TabIndex = 4;
             this.statusStrip1.Text = "statusStrip1";
             // 
+            // status
+            // 
+            this.status.Image = ((System.Drawing.Image)(resources.GetObject("status.Image")));
+            this.status.Name = "status";
+            this.status.Size = new System.Drawing.Size(95, 17);
+            this.status.Text = "Waiting for IP";
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(195, 101);
+            this.label1.Location = new System.Drawing.Point(214, 71);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(130, 13);
+            this.label1.Size = new System.Drawing.Size(85, 13);
             this.label1.TabIndex = 6;
-            this.label1.Text = "Select Server IP or type it!";
+            this.label1.Text = "Type IP Address";
             // 
             // loading
             // 
@@ -107,13 +107,6 @@
             this.loading.TabStop = false;
             this.loading.Visible = false;
             // 
-            // status
-            // 
-            this.status.Image = ((System.Drawing.Image)(resources.GetObject("status.Image")));
-            this.status.Name = "status";
-            this.status.Size = new System.Drawing.Size(127, 16);
-            this.status.Text = "Searching for server";
-            // 
             // Logging
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -125,7 +118,6 @@
             this.Controls.Add(this.Back);
             this.Controls.Add(this.Connect);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.comboBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Logging";
             this.Text = "Logging";
@@ -138,8 +130,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button Connect;
         private System.Windows.Forms.Button Back;

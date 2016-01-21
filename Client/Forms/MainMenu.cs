@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Client.Forms
@@ -19,15 +13,20 @@ namespace Client.Forms
 
         private void label2_Click(object sender, EventArgs e)
         {
-            //  Program.chat_main = new Forms.Chat();
-            //  Program.network.connect(IPAddress.Loopback);
-            // Forms.Logging a = new Forms.Logging();
-            // this.Hide();
-            //  Program.chat_main.ShowDialog();
-            Program.playground = new Forms.Playground();
-            Program.playground.ShowDialog();
+             // Program.chat_main = new Forms.Chat();
+              //Program.network.connect(IPAddress.Loopback);
+            Program.startform.Hide();
+            
+            while (Program.PlayerName == "0")
+            {
+                Forms.UserNameSelect uname = new UserNameSelect();
+                uname.ShowDialog();
+            }
 
-            this.Show();
+            Program.loggingform = new Logging();
+            Program.loggingform.Show();
+            Program.startform.Hide();
+            Program.mainRun = false;
         }
 
         private void label3_Click(object sender, EventArgs e)

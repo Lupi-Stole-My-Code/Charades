@@ -114,6 +114,12 @@
     <Compile Include="Forms\StartForm.Designer.cs">
       <DependentUpon>StartForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\UserNameSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UserNameSelect.Designer.cs">
+      <DependentUpon>UserNameSelect.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Wait.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -145,6 +151,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\StartForm.resx">
       <DependentUpon>StartForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UserNameSelect.resx">
+      <DependentUpon>UserNameSelect.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Wait.resx">
       <DependentUpon>Wait.cs</DependentUpon>

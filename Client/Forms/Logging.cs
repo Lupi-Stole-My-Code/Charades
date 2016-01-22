@@ -22,6 +22,14 @@ namespace Client.Forms
             Program.chat_main = new Chat();
             IPAddress ip = IPAddress.Parse(textBox1.Text);
             Program.network.connect(ip);
+            if(Program.connectionError)
+            {
+                Program.connectionError = false;
+                MessageBox.Show("Server didn't respond");
+                loading.Enabled = false;
+                loading.Visible = false;
+                return;
+            }
             Preferences.Chat.connected = true;
 
 

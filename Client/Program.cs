@@ -16,6 +16,7 @@ namespace Client
         public static bool chatRun = false;
         public static bool playgroundRun = false;
         public static bool mainRun = true;
+        public static bool connectionError = false;
         
         /// <summary>
         /// The main entry point for the application.

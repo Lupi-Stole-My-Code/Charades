@@ -2,6 +2,7 @@
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using System.Windows;
 
 namespace Client
 {
@@ -13,9 +14,16 @@ namespace Client
 
         public void connect(IPAddress ip, int port = 5678)
         {
-            clientSocket.Connect(ip, port);
-            serverStream = clientSocket.GetStream();
-
+            try
+            {
+                clientSocket.Connect(ip, port);
+                serverStream = clientSocket.GetStream();
+            }
+            catch
+            {
+                Program.connectionError = true;
+                return;
+            }
             readData = "Connected to Server!";
             msg();
 
@@ -72,6 +80,15 @@ namespace Client
                     msg();
                     Preferences.Chat.connected = false;
                     return false;
+                case "/@/YourTurn":
+                    Program.playground.setCanDraw(true);
+                    return true;
+                case "/@/TurnEnds30Sec":
+                    readData = "Your turn ends in 30 seconds! Hurry Up!";
+                    return true;
+                case "/@/TurnEnd":
+                    readData = "Your turn has been finished";
+                    return true;
                 default:
                     return true;
             }

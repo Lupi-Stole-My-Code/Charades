@@ -6,9 +6,10 @@ namespace Server
 {
     class Game
     {
-        private string playerName;
+        private int playerId;
         private List<string> players;
         private bool gameStarted = false;
+        private int maxId;
 
         public void start()
         {
@@ -25,6 +26,17 @@ namespace Server
             }
             Console.WriteLine("PLAYERS : " + string.Join(", ", players));
             gameStarted = true;
+            maxId = players.Count - 1;
+            playerId = 0;
+            gameTurn();
+        }
+
+        public void gameTurn()
+        {
+            if(playerId < maxId)
+            {
+                Program.broadcast("/@/YourTurn", "@", false, players[playerId]);
+            }
         }
 
         public void stop()

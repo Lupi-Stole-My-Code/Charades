@@ -6,31 +6,37 @@ namespace Client.Forms
 {
     public partial class Playground : Form
     {
-        public object activeForm;
+        private guess guess;
+        private Wait wait;
 
         public Playground()
         {
             InitializeComponent();
+            guess = new guess();
+            wait = new Wait();
         }
 
         private void Playground_Load(object sender, System.EventArgs e)
         {
-            this.TopMost = false;
             setCanDraw(false);
         }
 
         public void setCanDraw(bool state)
         {
+            this.Invoke((MethodInvoker)delegate { _setCanDraw(state); });
+        }
+
+        private void _setCanDraw(bool state)
+        {
+            panel1.Controls.Clear();
             if (state)
             {
-                activeForm = new guess();
+                panel1.Controls.Add(guess);
             }
             else
             {
-                activeForm = new Wait();
+                panel1.Controls.Add(wait);
             }
-            panel1.Controls.Clear();
-            panel1.Controls.Add((Control)activeForm);
         }
 
         private void Playground_FormClosing(object sender, FormClosingEventArgs e)

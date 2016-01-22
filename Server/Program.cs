@@ -86,7 +86,7 @@ namespace Server
             Console.ReadLine();
         }
 
-        public static void broadcast(string msg, string uName, bool flag, string type = "chat")
+        public static void broadcast(string msg, string uName, bool flag, string only = "")
         {
             List<DictionaryEntry> toRemove = new List<DictionaryEntry>();
 
@@ -101,6 +101,14 @@ namespace Server
                     Console.WriteLine("Cleaning Session : " + Item.Key.ToString());
                     toRemove.Add(Item);
                     continue;
+                }
+
+                if (only.Length > 0)
+                {
+                    if (Item.Key.ToString() != only)
+                    {
+                        continue;
+                    }
                 }
 
                 NetworkStream broadcastStream = broadcastSocket.GetStream();

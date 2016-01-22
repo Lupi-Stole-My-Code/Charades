@@ -33,6 +33,7 @@ namespace Client
 
         public static void Exit()
         {
+            Program.network.send("/#/disconnect");
             Music.Stop();
             Application.Exit();
         }

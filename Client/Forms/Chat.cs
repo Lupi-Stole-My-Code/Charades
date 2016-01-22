@@ -39,7 +39,14 @@ namespace Client.Forms
 
         private void append(string message)
         {
-            append(message, Program.PlayerName);
+            if (this.InvokeRequired)
+            {
+                this.Invoke((MethodInvoker)delegate { append(message); });
+            }
+            else
+            {
+                append(message, Program.PlayerName);
+            }
         }
 
         private void append(string message, string name)
@@ -55,14 +62,28 @@ namespace Client.Forms
 
         private void SystemMessage(string text)
         {
-            SystemMessage(text, Color.Red);
+            if (this.InvokeRequired)
+            {
+                this.Invoke((MethodInvoker)delegate { SystemMessage(text); });
+            }
+            else
+            {
+                SystemMessage(text, Color.Red);
+            }
         }
 
         private void SystemMessage(string text, Color color)
         {
-            Font font = new Font("Microsoft Sans Serif", 10);
-            chatBox.AppendText("[@]", Color.Red, font);
-            chatBox.AppendText(" " + text + Environment.NewLine, color, font);
+            if (this.InvokeRequired)
+            {
+                this.Invoke((MethodInvoker)delegate { SystemMessage(text, color); });
+            }
+            else
+            {
+                Font font = new Font("Microsoft Sans Serif", 10);
+                chatBox.AppendText("[@]", Color.Red, font);
+                chatBox.AppendText(" " + text + Environment.NewLine, color, font);
+            }
         }
 
         private void Chat_Load(object sender, EventArgs e)
@@ -76,7 +97,18 @@ namespace Client.Forms
                 this.Invoke((MethodInvoker)delegate { Msg(text); });
             else
             {
-                append(text, "Server");
+                if (text.Contains(" says : "))
+                {
+                    int i = text.IndexOf(" says : ");
+                    int c = " says : ".Length;
+                    string user = text.Substring(0, i);
+                    string msg = text.Substring(i + c);
+                    append(msg, user);
+                }
+                else
+                {
+                    SystemMessage(text);
+                }
             }
         }
 

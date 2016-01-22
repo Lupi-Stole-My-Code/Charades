@@ -40,7 +40,7 @@ namespace Server
             {
                 try
                 {
-                    
+
                     requestCount = requestCount + 1;
                     NetworkStream networkStream = clientSocket.GetStream();
                     networkStream.Read(bytesFrom, 0, bytesFrom.Length);
@@ -48,8 +48,13 @@ namespace Server
                     dataFromClient = dataFromClient.Substring(0, dataFromClient.IndexOf("$"));
                     Console.WriteLine("From client - " + clNo + " : " + dataFromClient);
                     rCount = Convert.ToString(requestCount);
-
+                    if(dataFromClient.Contains("/#/") && dataFromClient.IndexOf("/#/") == 0)
+                    {
+                        command(dataFromClient, clNo);
+                        continue;
+                    }
                     Program.broadcast(dataFromClient, clNo, true);
+                    command(dataFromClient, clNo);
                 }
                 catch (Exception ex)
                 {
@@ -57,5 +62,39 @@ namespace Server
                 }
             }
         }
-    } 
+
+        private void command(string txt, string from)
+        {
+            switch (txt)
+            {
+                case "/start":
+                    Console.WriteLine("Found command from '" + from + "': '" + txt + "'");
+                    Program.game.start();
+                    break;
+                case "/stop":
+                    Console.WriteLine("Found command from '" + from + "': '" + txt + "'");
+                    Program.game.stop();
+                    break;
+                case "/commands":
+                    Console.WriteLine("Found command from '" + from + "': '" + txt + "'");
+                    Program.game.showCommands();
+                    break;
+                case "/#/forceNext":
+                    Console.WriteLine("Found command from '" + from + "': '" + txt + "'");
+                    Program.game.forceNext();
+                    break;
+                case "/#/disconnect":
+                    Program.cleanSession(from);
+                    break;
+                default:
+                    break;
+            }
+            if(txt.Contains("/#/charade/"))
+            {
+                int i = "/#/charade/".Length;
+                string c = txt.Substring(i);
+                Program.game.setCharade(c, from);
+            }
+        }
+    }
 }

@@ -34,6 +34,8 @@ namespace Server
         public static readonly int port = 5678;
         public static int counter = 0;
 
+        public static Game game = new Game();
+
         static void Main(string[] args)
         {
             _consoleHandler = new ConsoleCtrlHandlerDelegate(ConsoleEventHandler);
@@ -84,7 +86,7 @@ namespace Server
             Console.ReadLine();
         }
 
-        public static void broadcast(string msg, string uName, bool flag)
+        public static void broadcast(string msg, string uName, bool flag, string type = "chat")
         {
             List<DictionaryEntry> toRemove = new List<DictionaryEntry>();
 
@@ -122,11 +124,26 @@ namespace Server
             {
                 foreach (DictionaryEntry var1 in toRemove)
                 {
-                    clientsList.Remove(var1.Key);
-                    clientsObjList.Remove(var1.Key);
+                    cleanSession(var1.Key.ToString());
                 }
                 toRemove = null;
             }
+        }
+
+        public static void cleanSession(string username)
+        {
+            foreach (DictionaryEntry var1 in clientsList)
+            {
+                if (var1.Key.ToString() == username)
+                {
+                    clientsList.Remove(var1.Key);
+                    clientsObjList.Remove(var1.Key);
+                    broadcast(username + " disconnected", "@", false);
+                    break;
+                }
+            }
+
+
         }
 
         private static void init()

@@ -41,6 +41,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.commands_btn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.brushsize_numeric)).BeginInit();
             this.SuspendLayout();
@@ -152,10 +153,20 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // commands_btn
+            // 
+            this.commands_btn.Location = new System.Drawing.Point(60, 434);
+            this.commands_btn.Name = "commands_btn";
+            this.commands_btn.Size = new System.Drawing.Size(75, 23);
+            this.commands_btn.TabIndex = 17;
+            this.commands_btn.Text = "Commands";
+            this.commands_btn.UseVisualStyleBackColor = true;
+            // 
             // guess
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.commands_btn);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox1);
@@ -190,5 +201,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button commands_btn;
     }
 }

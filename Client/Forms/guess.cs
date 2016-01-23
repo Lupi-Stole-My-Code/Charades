@@ -17,6 +17,7 @@ namespace Client.Forms
         private Graphics g;
         private Point p = Point.Empty;
         private Pen pioro;
+        int secs=180;
         public guess()
         {
          
@@ -33,7 +34,8 @@ namespace Client.Forms
             color_btn.BackColor = System.Drawing.Color.Black;
             pioro.Width = 1;
            
-
+            timer1.Interval = 1000;
+            timer1.Start();
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
@@ -141,6 +143,23 @@ namespace Client.Forms
         private void button2_Click(object sender, EventArgs e)
         {
             saveToFile();
+        }
+        private void timer()
+        {
+
+        }
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            
+            TimeSpan t = TimeSpan.FromSeconds(secs);
+
+            string answer = string.Format("{0:D2}h:{1:D2}m:{2:D2}s:{3:D3}ms",
+                            t.Hours,
+                            t.Minutes,
+                            t.Seconds,
+                            t.Milliseconds);
+            label3.Text = answer;
+            secs = secs - 1;
         }
     }
 }

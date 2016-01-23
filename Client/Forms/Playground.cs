@@ -18,7 +18,7 @@ namespace Client.Forms
 
         private void Playground_Load(object sender, System.EventArgs e)
         {
-            setCanDraw(false);
+            setCanDraw(true);
         }
 
         public void setCanDraw(bool state)

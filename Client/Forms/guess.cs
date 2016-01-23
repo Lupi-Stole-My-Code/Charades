@@ -33,9 +33,6 @@ namespace Client.Forms
             pioro = new Pen(System.Drawing.Color.Black);
             color_btn.BackColor = System.Drawing.Color.Black;
             pioro.Width = 1;
-           
-            timer1.Interval = 1000;
-            timer1.Start();
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
@@ -153,13 +150,18 @@ namespace Client.Forms
             
             TimeSpan t = TimeSpan.FromSeconds(secs);
 
-            string answer = string.Format("{0:D2}h:{1:D2}m:{2:D2}s:{3:D3}ms",
-                            t.Hours,
+            string answer = string.Format("{0:D2}m:{1:D2}s",
                             t.Minutes,
-                            t.Seconds,
-                            t.Milliseconds);
+                            t.Seconds
+                            );
             label3.Text = answer;
             secs = secs - 1;
+        }
+
+        private void guess_Load(object sender, EventArgs e)
+        {
+            timer1.Interval = 1000;
+            timer1.Start();
         }
     }
 }

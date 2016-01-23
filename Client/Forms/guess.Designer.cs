@@ -148,8 +148,8 @@
             // 
             // timer1
             // 
-            this.timer1.Enabled = true;
             this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // guess
             // 
@@ -167,6 +167,7 @@
             this.Controls.Add(this.brushsize_numeric);
             this.Name = "guess";
             this.Size = new System.Drawing.Size(704, 504);
+            this.Load += new System.EventHandler(this.guess_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.brushsize_numeric)).EndInit();
             this.ResumeLayout(false);

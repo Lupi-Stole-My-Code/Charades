@@ -135,7 +135,6 @@ namespace Client
                 case "/@/YourTurn":
                     Program.playground.setCanDraw(true);
                     Program.playground.guess.timerSet(180);
-                    Program.playground.wait.timerSet(180);
                     Program.turn = true;
                     readData = "It's your turn!";
                     return 0;
@@ -144,7 +143,6 @@ namespace Client
                     if (Program.turn)
                     {
                         Program.playground.guess.timerSet(30);
-                        Program.playground.wait.timerSet(30);
                     }
                     return 0;
                 case "/@/TurnEnd":

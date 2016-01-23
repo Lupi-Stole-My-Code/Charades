@@ -45,6 +45,7 @@ namespace Client.Forms
             }
             else
             {
+                if (message.Length > 255) return;
                 append(message, Program.PlayerName);
             }
         }

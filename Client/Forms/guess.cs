@@ -17,7 +17,7 @@ namespace Client.Forms
         private Graphics g;
         private Point p = Point.Empty;
         private Pen pioro;
-        int secs=180;
+        int secs=35;
         public guess()
         {
          
@@ -141,10 +141,7 @@ namespace Client.Forms
         {
             saveToFile();
         }
-        private void timer()
-        {
-
-        }
+       
         private void timer1_Tick(object sender, EventArgs e)
         {
             
@@ -155,13 +152,29 @@ namespace Client.Forms
                             t.Seconds
                             );
             label3.Text = answer;
+            if (secs < 30)
+            {
+                if (secs == 0)
+                {
+                    timer1.Stop();
+                }
+                label3.BackColor = Color.Red;
+                if (secs % 2 == 0)
+                {
+                    label3.BackColor = Color.Yellow;
+                }
+
+            }
             secs = secs - 1;
+            
+            
         }
 
         private void guess_Load(object sender, EventArgs e)
         {
             timer1.Interval = 1000;
             timer1.Start();
+            label3.BackColor = Color.Green;
         }
     }
 }

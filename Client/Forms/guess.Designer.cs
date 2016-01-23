@@ -142,9 +142,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(375, 478);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(31, 13);
+            this.label3.Size = new System.Drawing.Size(29, 13);
             this.label3.TabIndex = 16;
-            this.label3.Text = "dupa";
+            this.label3.Text = "timer";
             // 
             // timer1
             // 

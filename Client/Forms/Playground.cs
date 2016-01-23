@@ -8,6 +8,7 @@ namespace Client.Forms
     {
         public guess guess;
         public Wait wait;
+        bool isGuess = false;
 
         public Playground()
         {
@@ -36,16 +37,45 @@ namespace Client.Forms
             this.wait.setCharade(bmp);
         }
 
+        public void clear()
+        {
+            this.Invoke((MethodInvoker)delegate { _clear(); });
+        }
+
+        private void _clear()
+        {
+            try
+            {
+                if (isGuess)
+                {
+                    setCanDraw(true);
+                }
+                else
+                {
+                    setCanDraw(false);
+                   
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
         private void _setCanDraw(bool state)
         {
+            guess = new guess();
+            wait = new Wait();
             panel1.Controls.Clear();
             if (state)
             {
                 panel1.Controls.Add(guess);
+                isGuess = true;
             }
             else
             {
                 panel1.Controls.Add(wait);
+                isGuess = false;
             }
         }
 

@@ -138,42 +138,7 @@ namespace Server
             }
         }
 
-        public static void broadcast(byte[] send)
-        {
-            List<DictionaryEntry> toRemove = new List<DictionaryEntry>();
-
-            foreach (DictionaryEntry Item in clientsList)
-            {
-                TcpClient broadcastSocket;
-
-                broadcastSocket = (TcpClient)Item.Value;
-
-                if (!isConnected(broadcastSocket))
-                {
-                    Console.WriteLine("Cleaning Session : " + Item.Key.ToString());
-                    toRemove.Add(Item);
-                    continue;
-                }
-
-                NetworkStream broadcastStream = broadcastSocket.GetStream();
-
-                Byte[] broadcastBytes = null;
-                
-                    broadcastBytes = send;
-
-                broadcastStream.Write(broadcastBytes, 0, broadcastBytes.Length);
-                broadcastStream.Flush();
-            }
-
-            if (toRemove.Count > 0)
-            {
-                foreach (DictionaryEntry var1 in toRemove)
-                {
-                    cleanSession(var1.Key.ToString());
-                }
-                toRemove = null;
-            }
-        }
+       
 
         public static void cleanSession(string username)
         {

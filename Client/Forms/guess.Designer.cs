@@ -144,9 +144,8 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(375, 478);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(29, 13);
+            this.label3.Size = new System.Drawing.Size(0, 13);
             this.label3.TabIndex = 16;
-            this.label3.Text = "timer";
             // 
             // timer1
             // 
@@ -161,6 +160,7 @@
             this.commands_btn.TabIndex = 17;
             this.commands_btn.Text = "Commands";
             this.commands_btn.UseVisualStyleBackColor = true;
+            this.commands_btn.Click += new System.EventHandler(this.commands_btn_Click);
             // 
             // guess
             // 

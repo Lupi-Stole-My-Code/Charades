@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace Server
 {
@@ -9,21 +10,23 @@ namespace Server
     {
         private int playerId;
         private List<string> players;
-        private bool gameStarted = false;
+        public bool gameStarted = false;
         private int maxId;
         private string charade;
+        private Timer turnTimer;
+        private int thrSecs;
 
         public void start()
         {
             if(gameStarted)
             {
-                Program.broadcast("Game is already started", "@", false, "server");
+                Program.broadcast("Game is already started", "@", false);
                 return;
             }
             players = Program.clientsObjList.Keys.OfType<string>().ToList();
             if(players.Count < 2)
             {
-                Program.broadcast("Game cannot be started. Not enough players", "@", false, "server");
+                Program.broadcast("Game cannot be started. Not enough players", "@", false);
                 return;
             }
             Console.WriteLine("PLAYERS : " + string.Join(", ", players));
@@ -35,26 +38,54 @@ namespace Server
 
         public void gameTurn()
         {
-            if(playerId < maxId)
+            if(playerId <= maxId)
             {
                 Program.broadcast("/@/YourTurn", "@", false, players[playerId]);
+                thrSecs = 180;
+                turnTimer = new Timer(turnThreadMain, null, 0, 1000);
             }
+            else
+            {
+                playerId = 0;
+                gameTurn();
+                return;
+            }
+            playerId++;
         }
+
+        private void turnThreadMain(Object o)
+        {
+            if(thrSecs == 30)
+            {
+                Program.broadcast("/@/TurnEnds30Sec", "@", false, players[playerId]);
+            }
+            if(thrSecs <= 0)
+            {
+                Program.broadcast("/@/TurnEnd", "@", false, players[playerId]);
+                gameTurn();
+                turnTimer.Dispose();
+            }
+            thrSecs--;
+        }
+        
 
         public void stop()
         {
             if (!gameStarted)
             {
-                Program.broadcast("Game is not started", "@", false, "server");
+                Program.broadcast("Game is not started", "@", false);
                 return;
             }
             gameStarted = false;
+            Program.broadcast("/@/Stop","@", false);
+            turnTimer.Dispose();
 
         }
 
         public void showCommands()
         {
-            Program.broadcast("Commands list:\n/start - starts game\n/stop - stops game", "@", false, "server");
+            Console.WriteLine("Broadcasting game Commands");
+            Program.broadcast("Commands list:\n/start - starts game\n/stop - stops game", "@", false);
         }
 
         public void forceNext()
@@ -87,6 +118,22 @@ namespace Server
            // Array.Copy(tempo, header.Length, image, 0, tempo.Length - header.Length);
             
             return;
+        }
+
+        public void checkCharade(string input, string player)
+        {
+            if(charade.ToLower() == input.ToLower())
+            {
+                Thread.Sleep(100);
+                Program.broadcast("WINNER: " + player + "  Charade: " + input.ToLower(), "@", false);
+                try
+                {
+                    turnTimer.Dispose();
+                }
+                catch { }
+
+                gameTurn();
+            }
         }
 
 

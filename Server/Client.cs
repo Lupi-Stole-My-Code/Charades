@@ -47,17 +47,24 @@ namespace Server
                     networkStream.Read(bytesFrom, 0, bytesFrom.Length);
                     dataFromClient = System.Text.Encoding.ASCII.GetString(bytesFrom);
                     dataFromClient = dataFromClient.Substring(0, dataFromClient.IndexOf("$"));
-                    byte[] dt = Convert.FromBase64String(dataFromClient);
-                    string str = Encoding.UTF8.GetString(dt);
-                    
-                    if(str.Contains("/#/Charade/"))
+                    try
                     {
-                        Program.game.processCharade(dataFromClient);
-                        Console.WriteLine("Charade Received from " + clNo);
-                        // Program.broadcast(bytesFrom);
-                        Program.broadcast(dataFromClient, "@", false);
-                        continue;
+                        byte[] dt = Convert.FromBase64String(dataFromClient);
+                        string str = Encoding.UTF8.GetString(dt);
+                        if (str.Contains("/#/Charade/"))
+                        {
+                            Program.game.processCharade(dataFromClient);
+                            Console.WriteLine("Charade Received from " + clNo);
+                            // Program.broadcast(bytesFrom);
+                            Program.broadcast(dataFromClient, "@", false);
+                            continue;
+                        }
                     }
+                    catch
+                    {
+
+                    }
+
                     Console.WriteLine("From client - " + clNo + " : " + dataFromClient);
                     rCount = Convert.ToString(requestCount);
                     if(dataFromClient.Contains("/#/") && dataFromClient.IndexOf("/#/") == 0)
@@ -65,8 +72,13 @@ namespace Server
                         command(dataFromClient, clNo);
                         continue;
                     }
+                    
                     Program.broadcast(dataFromClient, clNo, true);
                     command(dataFromClient, clNo);
+                    if (Program.game.gameStarted)
+                    {
+                        Program.game.checkCharade(dataFromClient, clNo);
+                    }
                 }
                 catch (Exception ex)
                 {

@@ -79,6 +79,7 @@
             this.commands_btn.TabIndex = 19;
             this.commands_btn.Text = "Commands";
             this.commands_btn.UseVisualStyleBackColor = true;
+            this.commands_btn.Click += new System.EventHandler(this.commands_btn_Click);
             // 
             // Wait
             // 

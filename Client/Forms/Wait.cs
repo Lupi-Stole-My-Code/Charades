@@ -73,5 +73,9 @@ namespace Client.Forms
             }
         }
 
+        private void commands_btn_Click(object sender, EventArgs e)
+        {
+            Program.network.send("/commands");
+        }
     }
 }

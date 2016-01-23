@@ -61,6 +61,7 @@ namespace Client.Forms
         {
             g.Clear(System.Drawing.Color.White);
             pictureBox1.Refresh();
+            textBox1.Text = "";
         }
 
         private void color_btn_Click(object sender, EventArgs e)
@@ -218,7 +219,19 @@ namespace Client.Forms
 
             Program.network.send(base64);
             Program.playground.setCanDraw(false);
+            Program.turn = false;
         }
+
+        private void commands_btn_Click(object sender, EventArgs e)
+        {
+            Program.network.send("/commands");
+        }
+
+        public void Clear()
+        {
+            this.Invoke((MethodInvoker)delegate { clear(); });
+        }
+        
     }
 
     public static class BitmapExtensions

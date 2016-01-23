@@ -14,6 +14,7 @@ namespace Client
         TcpClient clientSocket = new TcpClient();
         NetworkStream serverStream = default(NetworkStream);
         string readData = null;
+        bool canLoop = true;
 
         public void connect(IPAddress ip, int port = 5678)
         {
@@ -43,15 +44,9 @@ namespace Client
             serverStream.Flush();
         }
 
-        public void send(byte[] bytes)
-        {
-            serverStream.Write(bytes, 0, bytes.Length);
-            serverStream.Flush();
-        }
-
         private void session()
         {
-            while (true)
+            while (canLoop)
             {
                 try
                 {
@@ -62,16 +57,33 @@ namespace Client
                     // serverStream.Read(inStream, 0, buffSize);
                     var count = serverStream.Read(inStream, 0, inStream.Length);
                     string returndata = Encoding.ASCII.GetString(inStream, 0, count);
-                    byte[] dt = Convert.FromBase64String(returndata);
-                    string str = Encoding.UTF8.GetString(dt);
-                    if (str.Contains("/#/Charade/"))
+                    try
                     {
-                        processCharade(returndata);
+                        byte[] dt = Convert.FromBase64String(returndata);
+                        string str = Encoding.UTF8.GetString(dt);
+                        if (str.Contains("/#/Charade/"))
+                        {
+                            processCharade(returndata);
+                            continue;
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+                    readData = "" + returndata;
+
+                    int st = checkIfCommand();
+                    if (st == -1)
+                    {
+                        break;
+                    }
+
+                    if (st == 1)
+                    {
                         continue;
                     }
-                    // string returndata = System.Text.Encoding.ASCII.GetString(inStream);
-                    readData = "" + returndata;
-                    if (!checkIfCommand()) break;
+
                     msg();
                 }
                 catch
@@ -81,13 +93,6 @@ namespace Client
             }
             serverStream.Close();
             clientSocket.Close();
-        }
-
-        public string FixBase64ForImage(string Image)
-        {
-            System.Text.StringBuilder sbText = new System.Text.StringBuilder(Image, Image.Length);
-            sbText.Replace("\r\n", String.Empty); sbText.Replace(" ", String.Empty);
-            return sbText.ToString();
         }
 
         private void processCharade(string base64)
@@ -113,7 +118,7 @@ namespace Client
             Program.playground.wait.setCharade(bmp1);
         }
 
-        private bool checkIfCommand()
+        private int checkIfCommand()
         {
             switch (readData)
             {
@@ -121,26 +126,48 @@ namespace Client
                     readData = "Server closed connection due to Player Nickname duplication";
                     msg();
                     Preferences.Chat.connected = false;
-                    return false;
+                    return -1;
                 case "BYE":
                     readData = "Server closed connection";
                     msg();
                     Preferences.Chat.connected = false;
-                    return false;
+                    return -1;
                 case "/@/YourTurn":
                     Program.playground.setCanDraw(true);
                     Program.playground.guess.timerSet(180);
-                    return true;
+                    Program.playground.wait.timerSet(180);
+                    Program.turn = true;
+                    readData = "It's your turn!";
+                    return 0;
                 case "/@/TurnEnds30Sec":
                     readData = "Your turn ends in 30 seconds! Hurry Up!";
-                    Program.playground.guess.timerSet(30);
-                    return true;
+                    if (Program.turn)
+                    {
+                        Program.playground.guess.timerSet(30);
+                        Program.playground.wait.timerSet(30);
+                    }
+                    return 0;
                 case "/@/TurnEnd":
-                    readData = "Your turn has been finished";
+                    if (Program.turn)
+                    {
+                        readData = "Your turn has been finished";
+                        Program.playground.setCanDraw(false);
+                        Program.playground.clear();
+                        Program.turn = false;
+                        return 0;
+                    }
+                    else
+                    {
+                        return 1;
+                    }
+                case "/@/Stop":
+                    readData = "Gra zatrzymana";
+                    Program.playground.clear();
                     Program.playground.setCanDraw(false);
-                    return true;
+                    Program.turn = false;
+                    return 0;
                 default:
-                    return true;
+                    return 0;
             }
         }
         private void msg()

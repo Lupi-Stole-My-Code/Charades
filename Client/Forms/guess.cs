@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
+using System.IO;
+using System.Threading;
 
 namespace Client.Forms
 {
@@ -165,9 +167,19 @@ namespace Client.Forms
                 }
 
             }
-            secs = secs - 1;
-            
-            
+            secs = secs - 1;    
+        }
+
+        public void timerSet(int seconds)
+        {
+            if(this.InvokeRequired)
+            {
+                this.Invoke((MethodInvoker)delegate { timerSet(seconds); });
+            }
+            else
+            {
+                this.secs = seconds;
+            }
         }
 
         private void guess_Load(object sender, EventArgs e)
@@ -175,6 +187,63 @@ namespace Client.Forms
             timer1.Interval = 1000;
             timer1.Start();
             label3.BackColor = Color.Green;
+        }
+
+
+        private void btnSend_Click(object sender, EventArgs e)
+        {
+            if(textBox1.Text.Length == 0)
+            {
+                MessageBox.Show("Charade's answer cannot be empty!");
+                return;
+            }
+            Bitmap image = (Bitmap)pictureBox1.Image;
+            pictureBox1.Image = new Bitmap(pictureBox1.Height, pictureBox1.Width);
+            string imageStr = image.ToBase64String(ImageFormat.Bmp);
+            byte[] bts = Utils.Zip(imageStr);
+
+            string HEADER = "/#/Charade/" + textBox1.Text + "!#/";
+            var header = Encoding.UTF8.GetBytes(HEADER);
+            
+            byte[] tempo = new byte[bts.Length + header.Length];
+            bts.CopyTo(tempo, header.Length);
+            header.CopyTo(tempo, 0);
+
+            string base64 = Convert.ToBase64String(tempo);
+            //byte[] base64b = Encoding.UTF8.GetBytes(base64);
+
+            
+
+           // byte[] send = base64b; //tempo
+
+            Program.network.send(base64);
+            Program.playground.setCanDraw(false);
+        }
+    }
+
+    public static class BitmapExtensions
+    {
+        public static string ToBase64String(this Bitmap bmp, ImageFormat imageFormat)
+        {
+            string base64String = string.Empty;
+
+
+            MemoryStream memoryStream = new MemoryStream();
+            bmp.Save(memoryStream, imageFormat);
+
+
+            memoryStream.Position = 0;
+            byte[] byteBuffer = memoryStream.ToArray();
+
+
+            memoryStream.Close();
+
+
+            base64String = Convert.ToBase64String(byteBuffer);
+            byteBuffer = null;
+
+
+            return base64String;
         }
     }
 }

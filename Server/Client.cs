@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Net.Sockets;
+using System.Text;
 using System.Threading;
 
 namespace Server
@@ -46,6 +47,17 @@ namespace Server
                     networkStream.Read(bytesFrom, 0, bytesFrom.Length);
                     dataFromClient = System.Text.Encoding.ASCII.GetString(bytesFrom);
                     dataFromClient = dataFromClient.Substring(0, dataFromClient.IndexOf("$"));
+                    byte[] dt = Convert.FromBase64String(dataFromClient);
+                    string str = Encoding.UTF8.GetString(dt);
+                    
+                    if(str.Contains("/#/Charade/"))
+                    {
+                        Program.game.processCharade(dataFromClient);
+                        Console.WriteLine("Charade Received from " + clNo);
+                        // Program.broadcast(bytesFrom);
+                        Program.broadcast(dataFromClient, "@", false);
+                        continue;
+                    }
                     Console.WriteLine("From client - " + clNo + " : " + dataFromClient);
                     rCount = Convert.ToString(requestCount);
                     if(dataFromClient.Contains("/#/") && dataFromClient.IndexOf("/#/") == 0)
@@ -88,12 +100,6 @@ namespace Server
                     break;
                 default:
                     break;
-            }
-            if(txt.Contains("/#/charade/"))
-            {
-                int i = "/#/charade/".Length;
-                string c = txt.Substring(i);
-                Program.game.setCharade(c, from);
             }
         }
     }

@@ -6,8 +6,8 @@ namespace Client.Forms
 {
     public partial class Playground : Form
     {
-        private guess guess;
-        private Wait wait;
+        public guess guess;
+        public Wait wait;
 
         public Playground()
         {
@@ -18,12 +18,22 @@ namespace Client.Forms
 
         private void Playground_Load(object sender, System.EventArgs e)
         {
-            setCanDraw(true);
+            setCanDraw(false);
         }
 
         public void setCanDraw(bool state)
         {
             this.Invoke((MethodInvoker)delegate { _setCanDraw(state); });
+        }
+
+        public void setCharade(Bitmap bmp)
+        {
+            this.Invoke((MethodInvoker)delegate { _setCharade(bmp); });
+        }
+
+        private void _setCharade(Bitmap bmp)
+        {
+            this.wait.setCharade(bmp);
         }
 
         private void _setCanDraw(bool state)

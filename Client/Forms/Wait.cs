@@ -16,5 +16,15 @@ namespace Client.Forms
         {
             InitializeComponent();
         }
+
+        public void setCharade(Bitmap bmp)
+        {
+            this.Invoke((MethodInvoker)delegate { _setCharade(bmp); });
+        }
+
+        private void _setCharade(Bitmap bmp)
+        {
+            pictureBox1.Image = bmp;
+        }
     }
 }
